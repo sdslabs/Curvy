@@ -1,21 +1,42 @@
+var noOfPlayers = 2;
+
 var speed = 0.06;
-var angularSpeed = 0.003;
-var defaultLineWidth = 3;
+var angularSpeed = 0.002;
+var defaultLineWidth = 4;
 var minLineWidth =10;
 
 var bgColor = "#000000";
 //  playerColores= [ orange		 green~  	]
-var playerColors = [ "#ff8834", "#22ff33"];
+var playerColors = [ "#ff8834","#22a4ff", "#22ff33"];
+
+
 var keyCodes = {
-	'a': 65,
-	's': 83,
-	'w': 87,
-	'd': 68,
 	'left': 37,
-	'down': 38,
 	'right': 39,
+
+	's': 83,
+	'd': 68,
+
+	'b': 66,
+	'n': 78,
+
+	'`': 192,
+	'1': 49,
+
+	'a': 65,
+	'w': 87,
+	'f': 70,
+	'down': 38,
 	'up': 38
+
 }
+
+var defaultKeyCombos = [
+	[keyCodes['left'], keyCodes['right']],
+	[keyCodes['s'], keyCodes['d']],
+	[keyCodes['b'], keyCodes['n']],
+	[keyCodes['`'], keyCodes['1']]
+]
 
 var canvasWidth=400, canvasHeight = 400;
 
@@ -32,9 +53,10 @@ var player = function(direc , xx, yy , col, keyAnti, keyClocki) {
 
 var playerList = [];
 
+for(var iitu = 0; iitu < noOfPlayers; iitu++){
+	playerList[iitu] =  new player(0,30,30,playerColors[iitu], defaultKeyCombos[iitu][0],defaultKeyCombos[iitu][1]);
+}
 
-playerList[0] =  new player(0,30,30,playerColors[0], keyCodes['s'],keyCodes['d']);
-playerList[1] =  new player(0,50,20,playerColors[1], keyCodes['left'],keyCodes['right']);
 
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
@@ -58,6 +80,7 @@ var pressedKeys = {};
 //add key
 addEventListener("keydown", function (e) {
 	pressedKeys[e.keyCode] = true;
+	console.log(e.keyCode);
 }, false);		
 
 //remove key
@@ -132,12 +155,16 @@ var render = function(millisecs){
 			playerList[i].y = newY;
 
 		}
-		for(var ii = 0.8; ii<=1.0; ii+= 0.1){
+		if(newX<0 || newX > canvasWidth || newY< 0 || newY > canvasHeight)
+			playerList[i].alive=false;
+
+		for(var ii = 1; ii<=1.2; ii+= 0.1){
 			testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
 			testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);		
 			cols=ctx.getImageData(testX,testY,1,1).data;
 			//if(cols[0]!=0){console.log("col  " + cols[0]);}
-			if (cols[0] >25 || cols[0]==34) playerList[i].alive=false;
+
+			if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239)) playerList[i].alive=false;
 		}
 		//console.log(ctx.getImageData(testX,testY,1,1).data[0]);
 
@@ -188,7 +215,7 @@ var main = function () {
 	//update(delta);
 	render(delta);
 	then = now;
-	requestAnimationFrame(main);
+	setTimeout(function(){requestAnimationFrame(main);},10);
 };
 
 // Cross-browser support for requestAnimationFrame
