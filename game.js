@@ -1,4 +1,9 @@
-var noOfPlayers = 2;
+document.getElementById("gamestatus").innerText+="Use buttons (Left,Right),(s,d),(b,n),(`,1).\n\n";
+
+var noOfPlayers = prompt("Enter no of players.");
+if(!noOfPlayers) noOfPlayers=1;
+
+
 
 var speed = 0.06;
 var angularSpeed = 0.002;
@@ -8,7 +13,7 @@ var minLineWidth =10;
 var bgColor = "#000000";
 //  playerColores= [ orange		 green~  	]
 var playerColors = [ "#ff8834","#22a4ff", "#22ff33", "#ff2fd3"];
-var playerNames = ["orange", "blue", "green", "pink"];
+var playerNames = ["Orange", "Blue", "Green", "Pink"];
 
 
 var keyCodes = {
@@ -89,23 +94,6 @@ addEventListener("keyup", function (e)
 {	delete pressedKeys[e.keyCode];
 }, false);
 
-//reset function
-// var reset = function(){
-// 	car.x = 80;
-// 	car.y = 280;
-// 	defend1.x = 1000;
-// 	defend1.y = 280;
-// 	defend2.x = 1500;
-// 	defend2.y = 150;
-// 	road.x = 0;
-// 	road.y = 0;
-// 	road2.x = canvas.width;
-// 	road2.y = 0;
-// 	score = 0;
-// 	real_score = 0;
-// 	defend1.speed = 256;
-// 	defend2.speed = 256;
-// };
 
 //render function
 var render = function(millisecs){
@@ -162,6 +150,8 @@ var render = function(millisecs){
 			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost\n";
 		}
 
+
+//Algo for colision detection. Need to work on this
 		for(var ii = 1; ii<=1.2; ii+= 0.1){
 			testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
 			testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);		
@@ -171,29 +161,11 @@ var render = function(millisecs){
 			if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
 			{
 				playerList[i].alive=false;
-				document.getElementById("gamestatus").innerText+=playerNames[i] + " lost\n";
+				document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
 			}
 		}
-		//console.log(ctx.getImageData(testX,testY,1,1).data[0]);
 
-		// var displacement = Math.sqrt((oldX-newX)*(oldX-newX) + (oldY-newY)*(oldY-newY));
-		// //console.log(oldX + '  ' + newX + '   ' + displacement + '  ' + millisecs);
-		// var step = minLineWidth/2;
-		// var stepX = step * (oldX-newX) / displacement;
-		// //console.log('and ' + step + '  ' + stepX);
-		// var stepY = step * (oldY-newY) / displacement;
-		// var checkPoints = displacement/step;
-		// //console.log('well ' + 	checkPoints);
-		// console.log('old is ' + oldX + ' ' + oldY);
-		// console.log('new is ' + newX + ' ' + newY);
-		// for (var j = 0; j<checkPoints; j++){
-		// 	midX = newX + j * stepX;
-		// 	midY = newY + j * stepY;
-		// 	console.log('mid is ' + midX + ' ' + midY);
-		// 	cols=ctx.getImageData(midX,midY,1,1).data;
-		// 	if (cols[0] == 255) playerList[i].alive=false;
-		// 	console.log(ctx.getImageData(midX,midY,1,1).data[0]);
-		// }
+
 
 		ctx.beginPath();
 		ctx.moveTo(oldX,oldY);
@@ -204,18 +176,8 @@ var render = function(millisecs){
 		ctx.stroke();
 
 	}
-	//display score
-	// ctx.fillStyle = "rgb(25, 25, 25)";
-	// ctx.font = "24px Helvetica";
-	// ctx.textAlign = "left";
-	// ctx.textBaseline = "top";
-	// ctx.fillText("Score : " + real_score, 32, 32);
 };
 
-//update function
-// var update = function(mod){
-	
-// };
 
 var main = function () {
 	var now = Date.now();
@@ -230,9 +192,8 @@ var main = function () {
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
-// Let's play this game!
 var then = Date.now();
-//reset();
+
 var timeElapsed=0;
 render(0.001);
 main();
