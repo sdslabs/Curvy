@@ -7,7 +7,8 @@ var minLineWidth =10;
 
 var bgColor = "#000000";
 //  playerColores= [ orange		 green~  	]
-var playerColors = [ "#ff8834","#22a4ff", "#22ff33"];
+var playerColors = [ "#ff8834","#22a4ff", "#22ff33", "#ff2fd3"];
+var playerNames = ["orange", "blue", "green", "pink"];
 
 
 var keyCodes = {
@@ -156,7 +157,10 @@ var render = function(millisecs){
 
 		}
 		if(newX<0 || newX > canvasWidth || newY< 0 || newY > canvasHeight)
+		{
 			playerList[i].alive=false;
+			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost\n";
+		}
 
 		for(var ii = 1; ii<=1.2; ii+= 0.1){
 			testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
@@ -164,7 +168,11 @@ var render = function(millisecs){
 			cols=ctx.getImageData(testX,testY,1,1).data;
 			//if(cols[0]!=0){console.log("col  " + cols[0]);}
 
-			if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239)) playerList[i].alive=false;
+			if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
+			{
+				playerList[i].alive=false;
+				document.getElementById("gamestatus").innerText+=playerNames[i] + " lost\n";
+			}
 		}
 		//console.log(ctx.getImageData(testX,testY,1,1).data[0]);
 
