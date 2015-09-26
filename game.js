@@ -1,6 +1,7 @@
+
 document.getElementById("gamestatus").innerText+="Use buttons (Left,Right),(s,d),(b,n),(`,1).\n\n";
 
-var noOfPlayers = prompt("Enter no of players.");
+var noOfPlayers = prompt("Enter no of players (Max 4, for now) :");
 if(!noOfPlayers) noOfPlayers=1;
 
 
@@ -147,21 +148,24 @@ var render = function(millisecs){
 		if(newX<0 || newX > canvasWidth || newY< 0 || newY > canvasHeight)
 		{
 			playerList[i].alive=false;
-			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost\n";
+			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+
 		}
 
 
 //Algo for colision detection. Need to work on this
-		for(var ii = 1; ii<=1.2; ii+= 0.1){
-			testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
-			testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);		
-			cols=ctx.getImageData(testX,testY,1,1).data;
-			//if(cols[0]!=0){console.log("col  " + cols[0]);}
+		if(playerList[i].alive){
+			for(var ii = 1; ii<=1.2; ii+= 0.1){
+				testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
+				testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);		
+				cols=ctx.getImageData(testX,testY,1,1).data;
+				//if(cols[0]!=0){console.log("col  " + cols[0]);}
 
-			if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
-			{
-				playerList[i].alive=false;
-				document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+				if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
+				{
+					playerList[i].alive=false;
+					document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+				}
 			}
 		}
 

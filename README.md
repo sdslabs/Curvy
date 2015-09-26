@@ -1,7 +1,3 @@
-# Score-Car
->Score as much as u can
+# Curvy
 
-#How to??
->Dont touch other cars
-
->Your score depends on amount time u stayed in the game
+Curvy is a mutiplayer game, in which each player has to control a curve and avoid colliding with other players or the boundary.
