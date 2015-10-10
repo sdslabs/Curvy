@@ -58,13 +58,6 @@ var player = function(direc , xx, yy , col, keyAnti, keyClocki) {
 	this.lineWidth = defaultLineWidth;
 };
 
-var playerList = [];
-
-for(var iitu = 0; iitu < noOfPlayers; iitu++){
-	playerList[iitu] =  new player(0,30,30,playerColors[iitu], defaultKeyCombos[iitu][0],defaultKeyCombos[iitu][1]);
-}
-
-
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = canvasWidth;
@@ -75,9 +68,22 @@ document.getElementById("gamediv").appendChild(canvas);
 document.body.style.backgroundColor = "black";
 
 
-ctx.fillStyle = bgColor;
-ctx.fillRect(0,0,canvas.width,canvas.height);
+var playerList = [];
+var timeElapsed=0;
+var noOfAlivePlayers;
 
+var resetCanvas =  function(){
+	ctx.fillStyle = bgColor;
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+
+	playerList = [];
+	for(var iitu = 0; iitu < noOfPlayers; iitu++){
+		playerList[iitu] =  new player(0,30,30,playerColors[iitu], defaultKeyCombos[iitu][0],defaultKeyCombos[iitu][1]);
+	}
+	timeElapsed=0;
+	noOfAlivePlayers = noOfPlayers;
+
+}
 
 
 //pressed keys
@@ -148,7 +154,7 @@ var render = function(millisecs){
 		if(newX<0 || newX > canvasWidth || newY< 0 || newY > canvasHeight)
 		{
 			playerList[i].alive=false;
-			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+			
 
 		}
 
@@ -164,12 +170,20 @@ var render = function(millisecs){
 				if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
 				{
 					playerList[i].alive=false;
-					document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+					
 				}
 			}
 		}
 
-
+		if (playerList[i].alive==false) {
+			noOfAlivePlayers-=1;
+			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+			if (noOfAlivePlayers==1){
+				setTimeout(function(){
+					resetCanvas();
+				},1000);
+			}
+		}
 
 		ctx.beginPath();
 		ctx.moveTo(oldX,oldY);
@@ -198,6 +212,8 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 var then = Date.now();
 
-var timeElapsed=0;
+resetCanvas();
+
+
 render(0.001);
 main();
