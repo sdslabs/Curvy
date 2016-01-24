@@ -1,16 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<title>Development</title>
-	</head>
-	<body style="backgroundColor: black;">
-		<div id="gamediv" style="position: fixed; left: 250px; top: 100px;">
+	<style>
+		html{
+			height: 100%;
+		}
+		body{
+			background-color: #151515;
+			background-repeat: no-repeat;
+			font-family: 'Roboto';
+			font-weight: 300;
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			color: #aaa;
+			/*background: radial-gradient(circle, #151515 5%, #101010 20%, #080808 30%, #050505 40%, black 100%);;*/
+			/*background: -webkit-gradient(radial, 50% 50%, 20, 50% 50%, 400, from(#292222), to(#111));*/
+			/*background: linear-gradient(#040404, #111);*/
 
+		}
+		.squareDiv{
+			width: 800px;
+			margin: 40px auto;
+			
+		}
+		.header{
+			font-weight: 100;
+			width: 100%;
+			height: 60px;
+			text-align: center;
+			font-size: 40px;
+			color: #ccc;
+		}
+		.contentDiv{
+			margin-top: 30px;
+		}
+		.playerCountDiv{
+			text-align: center;
+		}
+		#playerConfigListDiv{
+			margin-top: 20px;
+			margin-bottom: 40px;
+			text-align: center;
+		}
+		.playerConfigDiv{
+			width: 100%;
+		}
+		.playerNameDiv{
+			width: 30%;
+			display: inline-block;
+		}
+		.playerKeyDiv{
+			width: 20%;
+			display: inline-block;
+		}
+		.prompt{
+			margin-right: 15%;
+		}
+		input{
+			background-color: #ffffff;
+			color: #333;
+			border: 1px solid #aaa;
+			border-radius: 2px;
+		}
+		button{
+			background-color: #222;
+			border-radius: 3px;
+			border: 1px solid #444;
+			color: #aaa;
+			padding: 5px 18px;
+		}
+		button:hover{
+			background: -webkit-linear-gradient(top, rgb(218, 0, 0) 0px, rgb(154, 0, 0) 100%);
+		}
+		.buttonPanelDiv{
+			text-align: center;
+		}
+	</style>
+		<meta charset="utf-8">
+		<title>Curvy</title>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic' rel='stylesheet' type='text/css'>
+	</head>
+	<body >
+
+		<div class="squareDiv">
+			<div class="header">
+				Curvy
+			</div>
+			<div class="contentDiv">
+				<div class="playerCountDiv">
+					<label class="prompt">No of Players</label>
+					<input id="playerCount" value="2" onkeyup="playerCountChanged()">
+				</div>
+				<div id="playerConfigListDiv">
+				</div>
+				<div class="buttonPanelDiv"><button onclick="redirectToGame()" class="startButton">Start Game</button></div>
+			</div>
 		</div>
-		<div id="gamestatus" style="color: white;">
-		
-		</div>
-		<script src="game.js"></script>	
+		<script src="common.js"></script>
+		<script src="index.js"></script>
 	</body>
 </html>

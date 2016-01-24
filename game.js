@@ -1,53 +1,31 @@
-
-document.getElementById("gamestatus").innerText+="Use buttons (Left,Right),(s,d),(b,n),(`,1).\n\n";
-
-var noOfPlayers = prompt("Enter no of players (Max 4, for now) :");
-if(!noOfPlayers) noOfPlayers=1;
-
-
-
-var speed = 0.06;
-var angularSpeed = 0.002;
-var defaultLineWidth = 4;
-var minLineWidth =10;
-
-var bgColor = "#000000";
-//  playerColores= [ orange		 green~  	]
-var playerColors = [ "#ff8834","#22a4ff", "#22ff33", "#ff2fd3"];
-var playerNames = ["Orange", "Blue", "Green", "Pink"];
-
-
-var keyCodes = {
-	'left': 37,
-	'right': 39,
-
-	's': 83,
-	'd': 68,
-
-	'b': 66,
-	'n': 78,
-
-	'`': 192,
-	'1': 49,
-
-	'a': 65,
-	'w': 87,
-	'f': 70,
-	'down': 38,
-	'up': 38
-
+function getConfigFromUrl(){
+	var querySring = location.search;
+	var index1 = querySring.indexOf('config=');
+	if (index1 != -1){
+		index2 = querySring.indexOf('&',index1+7);
+		if (index2 != -1){
+			configString = querySring.slice(index1+7,index2);
+		} else {
+			configString = querySring.slice(index1+7);
+		}
+		return(JSON.parse(atob(decodeURIComponent(configString))));
+	}
+	return null;
 }
 
-var defaultKeyCombos = [
-	[keyCodes['left'], keyCodes['right']],
-	[keyCodes['s'], keyCodes['d']],
-	[keyCodes['b'], keyCodes['n']],
-	[keyCodes['`'], keyCodes['1']]
-]
+function getDefaultConfig(){
+	var noOfPlayers_temp = prompt("Enter no of players (Max 4, for now) :");
+	if(!noOfPlayers_temp) noOfPlayers=1;
+	return(getDefaultPlayerConfigList(noOfPlayers_temp));
+}
+
+var config = getConfigFromUrl();
+if (!config) config = getDefaultConfig();
+var noOfPlayers = config.length;
 
 var canvasWidth=400, canvasHeight = 400;
 
-var player = function(direc , xx, yy , col, keyAnti, keyClocki) {
+var player = function(direc , xx, yy , col, keyAnti, keyClocki, prevScore) {
 	this.direction = Math.floor((Math.random() * 2 * Math.PI));
 	this.x = Math.floor((Math.random() * canvasWidth * (0.6)) + canvasWidth * (0.2));
 	this.y = Math.floor((Math.random() * canvasHeight * (0.6)) + canvasHeight * (0.2));
@@ -56,16 +34,17 @@ var player = function(direc , xx, yy , col, keyAnti, keyClocki) {
 	this.keyClocki = keyClocki;
 	this.alive = true;
 	this.lineWidth = defaultLineWidth;
+	this.score = prevScore;
 };
 
-var canvas = document.createElement("canvas");
+var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 canvas.style.border = "4px solid #70707f";
 //console.log(canvas.style);
-document.getElementById("gamediv").appendChild(canvas);
-document.body.style.backgroundColor = "black";
+//document.getElementById("gamediv").appendChild(canvas);
+//document.body.style.backgroundColor = "black";
 
 
 var playerList = [];
@@ -76,9 +55,12 @@ var resetCanvas =  function(){
 	ctx.fillStyle = bgColor;
 	ctx.fillRect(0,0,canvas.width,canvas.height);
 
-	playerList = [];
+	if(!playerList) playerList = [];
 	for(var iitu = 0; iitu < noOfPlayers; iitu++){
-		playerList[iitu] =  new player(0,30,30,playerColors[iitu], defaultKeyCombos[iitu][0],defaultKeyCombos[iitu][1]);
+		console.log(playerList[iitu]);
+		console.log("playerList[iitu].score");
+		console.log(playerList[iitu]?playerList[iitu].score:0);
+		playerList[iitu] =  new player(0,30,30,config[iitu].colorIndex, config[iitu].keyAnti,config[iitu].keyClocki,(playerList[iitu]?playerList[iitu].score:0));
 	}
 	timeElapsed=0;
 	noOfAlivePlayers = noOfPlayers;
@@ -101,6 +83,14 @@ addEventListener("keyup", function (e)
 {	delete pressedKeys[e.keyCode];
 }, false);
 
+
+var showScores = function(){
+	var scoreText = "Scores:</br>";
+	for(var ioi = 0; ioi < noOfPlayers; ioi++){
+		scoreText += playerNames[ioi] + ": " + playerList[ioi].score + "</br>";
+	} 
+	document.getElementById("scores").innerHTML = scoreText;
+}
 
 //render function
 var render = function(millisecs){
@@ -125,8 +115,8 @@ var render = function(millisecs){
 		var oldDirec = playerList[i].direction;
 
 		//console.log(pressedKeys);
-		if (( playerList[i].keyAnti in pressedKeys)||(playerList[i].keyClocki in pressedKeys)){
-			sense = ((playerList[i].keyAnti in pressedKeys)?1:-1);		//sense is 1 for anticlockwise, -1 for clockwise
+		if (( keyCodes[playerList[i].keyAnti] in pressedKeys)||(keyCodes[playerList[i].keyClocki] in pressedKeys)){
+			sense = ((keyCodes[playerList[i].keyAnti] in pressedKeys)?1:-1);		//sense is 1 for anticlockwise, -1 for clockwise
 
 			//console.log(playerList[i].direction);
 
@@ -159,7 +149,7 @@ var render = function(millisecs){
 		}
 
 
-//Algo for colision detection. Need to work on this
+//Algo for colision detection. So ugly.
 		if(playerList[i].alive){
 			for(var ii = 1; ii<=1.2; ii+= 0.1){
 				testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
@@ -177,8 +167,13 @@ var render = function(millisecs){
 
 		if (playerList[i].alive==false) {
 			noOfAlivePlayers-=1;
-			document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
+			for(var ie = 0; ie < playerList.length; ie++)
+				if(playerList[ie].alive) playerList[ie].score+=1;
+			showScores();
+			playerList[i].score+=noOfPlayers - noOfAlivePlayers-1;
+			//document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
 			if (noOfAlivePlayers==1){
+				showScores();
 				setTimeout(function(){
 					resetCanvas();
 				},1000);
@@ -188,13 +183,15 @@ var render = function(millisecs){
 		ctx.beginPath();
 		ctx.moveTo(oldX,oldY);
 		ctx.lineTo(newX,newY);
-		ctx.strokeStyle = playerList[i].color;
+		ctx.strokeStyle = playerColors[playerList[i].color];
 		ctx.lineWidth = playerList[i].lineWidth;
 		ctx.lineCap = "round";
 		ctx.stroke();
 
 	}
 };
+
+
 
 
 var main = function () {
@@ -213,7 +210,6 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 var then = Date.now();
 
 resetCanvas();
-
 
 render(0.001);
 main();
