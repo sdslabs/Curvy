@@ -23,7 +23,7 @@ var config = getConfigFromUrl();
 if (!config) config = getDefaultConfig();
 var noOfPlayers = config.length;
 
-var canvasWidth=400, canvasHeight = 400;
+var canvasWidth=600, canvasHeight = 600;
 
 var player = function(direc , xx, yy , col, keyAnti, keyClocki, prevScore) {
 	this.direction = Math.floor((Math.random() * 2 * Math.PI));
@@ -41,7 +41,6 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
-canvas.style.border = "4px solid #70707f";
 //console.log(canvas.style);
 //document.getElementById("gamediv").appendChild(canvas);
 //document.body.style.backgroundColor = "black";

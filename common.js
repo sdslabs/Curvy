@@ -1,6 +1,6 @@
-var speed = 0.09;
-var angularSpeed = 0.002;
-var defaultLineWidth = 4;
+var speed = 0.1;
+var angularSpeed = 0.0025;
+var defaultLineWidth = 7;
 var minLineWidth =10;
 
 maxPlayerCount = 4;
