@@ -76,12 +76,12 @@ var pressedKeys = {};
 addEventListener("keydown", function (e) {
 	pressedKeys[e.keyCode] = true;
 	console.log(e.keyCode);
-}, false);		
+}, true);		
 
 //remove key
 addEventListener("keyup", function (e) 
 {	delete pressedKeys[e.keyCode];
-}, false);
+}, true);
 
 var appendScoreDivs = function(){
 	for(var i = 0; i < noOfPlayers; i++){
@@ -193,13 +193,11 @@ var render = function(millisecs){
 			for(var ie = 0; ie < playerList.length; ie++)
 				if(playerList[ie].alive) playerList[ie].score+=1;
 			showScores();
-			playerList[i].score+=noOfPlayers - noOfAlivePlayers-1;
-			//document.getElementById("gamestatus").innerText+=playerNames[i] + " lost.\n";
 			if (noOfAlivePlayers==1){
 				showScores();
 				setTimeout(function(){
 					resetCanvas();
-				},1000);
+				},1500);
 			}
 		}
 

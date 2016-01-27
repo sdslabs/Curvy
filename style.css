@@ -7,11 +7,11 @@ body{
 	background-repeat: no-repeat;
 	font-family: 'Roboto';
 	font-size: 16px;
-	font-weight: 100;
+	font-weight: 300;
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	color: #ddd;
+	color: #bbb;
 	/*background: radial-gradient(circle, #151515 5%, #101010 20%, #080808 30%, #050505 40%, black 100%);;*/
 	/*background: -webkit-gradient(radial, 50% 50%, 20, 50% 50%, 400, from(#292222), to(#111));*/
 	/*background: linear-gradient(#040404, #111);*/
@@ -63,8 +63,8 @@ body{
 
 }
 
-.contentDiv{
-	margin-top: 35px;
+.centerDiv{
+	display: inline-block;
 }
 
 .playerCanvas{
@@ -73,11 +73,12 @@ body{
 }
 
 .playerCountDiv{
+	margin-top: 25px;
 	text-align: center;
 }
 
 #playerCount{
-	width: 140px;
+	width: 100px;
 	text-align: center;
 }
 
@@ -121,7 +122,7 @@ div.playerColorDiv{
 }
 
 .prompt{
-	margin-right: 50px;
+	margin-right: 20px;
 }
 
 .playerNameStatusDiv{
