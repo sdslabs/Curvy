@@ -3,71 +3,153 @@ html{
 }
 
 body{
-	background-color: #151515;
+	background-color: #0e0e0e;
 	background-repeat: no-repeat;
 	font-family: 'Roboto';
-	font-weight: 300;
+	font-size: 16px;
+	font-weight: 100;
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	color: #aaa;
+	color: #ddd;
 	/*background: radial-gradient(circle, #151515 5%, #101010 20%, #080808 30%, #050505 40%, black 100%);;*/
 	/*background: -webkit-gradient(radial, 50% 50%, 20, 50% 50%, 400, from(#292222), to(#111));*/
 	/*background: linear-gradient(#040404, #111);*/
 }
 
 .squareDiv{
-	width: 800px;
-	margin: 40px auto;
-	
+	width: 100%;
+	text-align: center;
+}
+
+.sideHeading{
+	font-size: 18px;
+	margin-bottom: 7px;
+}
+
+#gameStatus{
+	margin-top: 10px;
+	width: 100%%;
+}
+
+.sideDiv{
+	display: inline-block;
+	position: fixed;
+	width: 160px;
+	height: 100%;
+
+}
+
+.leftDiv{
+	border-right: 1px solid #333;
+	padding-left: 20px;
+	float: left;
+	left: 0;
+	text-align: left;
+}
+
+.rightDiv{
+
+	float: right;
 }
 
 .header{
 	font-weight: 100;
+	margin-top: 30px;
 	width: 100%;
 	height: 60px;
 	text-align: center;
 	font-size: 40px;
-	color: #ccc;
+
 }
 
 .contentDiv{
-	margin-top: 30px;
+	margin-top: 35px;
+}
+
+.playerCanvas{
+	border: 2px solid #333;
+	margin: 0 auto;
 }
 
 .playerCountDiv{
 	text-align: center;
 }
 
+#playerCount{
+	width: 140px;
+	text-align: center;
+}
+
 #playerConfigListDiv{
+	margin: auto;
 	margin-top: 20px;
 	margin-bottom: 40px;
-	text-align: center;
+	text-align: left;
+	width: 350px;
+	display: table;
+	table-layout: fixed;
+}
+
+.tableHeader{
+	font-size: 16px;
+	margin-bottom: 200px;
+}
+
+.tableHeaderCell{
+	margin-bottom: 200px;
 }
 
 .playerConfigDiv{
 	width: 100%;
+	display: table-row;
 }
 
 .playerNameDiv{
-	width: 30%;
-	display: inline-block;
+	width: 80px;
+	display: table-cell;
+}
+
+div.playerColorDiv{
+	width: 10	5px;
+	display: table-cell;
 }
 
 .playerKeyDiv{
 	width: 20%;
-	display: inline-block;
+	display: table-cell;
 }
 
 .prompt{
-	margin-right: 15%;
+	margin-right: 50px;
+}
+
+.playerNameStatusDiv{
+	display: inline-block;
+	width: 50%;
+}
+
+.playerColorStatusDiv{
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: 0 20px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
+	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
+
+}
+
+.playerScoreStatusDiv{
+	display: inline-block;
 }
 
 input{
 	background-color: #ffffff;
 	color: #333;
-	border: 1px solid #aaa;
-	border-radius: 2px;
+	border: 1px solid #000;
+	border-radius: 4px;
 }
 
 button{
@@ -87,3 +169,6 @@ button:hover{
 	text-align: center;
 }
 
+mainDiv{
+	margin: 20px auto;
+}

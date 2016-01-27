@@ -9,22 +9,25 @@
 		<link rel='stylesheet' href='style.css' type='text/css'>
 	</head>
 	<body >
-
 		<div class="squareDiv">
 			<div class="header">
 				Curvy
 			</div>
-			<div class="main">
-				<div id="gamestatus" style="color: white; display: inline-block; width: 20%; height: 100%;">
-					<div id="scores" style="color: white;">
-					
+			<div class="sideDiv leftDiv">
+				<div id="gameStatus">
+					<div class="sideHeading">SCORES</div>
+					<div id="scores">
 					</div>
 				</div>
+			</div>
+			<div class="mainDiv">
 				<div style="display: inline-block; margin-top: 20px; width: 70%; height: 100%;">
 					<div id="gamediv" style="text-align: center; left: 250px; top: 100px;">
-						<canvas style="border: 2px solid #333; margin: 0 auto;" id="canvas"></canvas>
+						<canvas class="playerCanvas" id="canvas"></canvas>
 					</div>
 				</div>
+			</div>
+			<div class="sideDiv rightDiv">
 			</div>
 		</div>
 		<script src="common.js"></script>

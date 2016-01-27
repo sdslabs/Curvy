@@ -33,18 +33,26 @@ function appendPlayerConfigDiv(index){
 	newDiv.id = playerConfigDivIdPrefix + index;
 
 	newDivName = document.createElement("div");
-	newDivName.className = "playerNameDiv"
-	newDivName.innerHTML = playerNames[playerConfigList[index].colorIndex]
+	newDivName.className = "playerNameDiv";
+	newDivName.innerHTML = playerNames[playerConfigList[index].colorIndex];
+
+	newDivColorStatus = document.createElement("div");
+	newDivColorStatus.className = "playerColorStatusDiv"
+	newDivColorStatus.style.backgroundColor = playerColors[playerConfigList[index].colorIndex]
+	newDivColor = document.createElement("div");
+	newDivColor.className = "playerColorDiv";
+	newDivColor.appendChild(newDivColorStatus);
 
 	newDivKeyAnti = document.createElement("div");
-	newDivKeyAnti.className = "playerKeyDiv playerKeyAntiDiv"
-	newDivKeyAnti.innerHTML = keyNames[playerConfigList[index].keyAnti]
+	newDivKeyAnti.className = "playerKeyDiv playerKeyAntiDiv";
+	newDivKeyAnti.innerHTML = keyNames[playerConfigList[index].keyAnti];
 
 	newDivKeyClocki = document.createElement("div");
-	newDivKeyClocki.className = "playerKeyDiv playerKeyClockiDiv"
-	newDivKeyClocki.innerHTML = keyNames[playerConfigList[index].keyClocki]
+	newDivKeyClocki.className = "playerKeyDiv playerKeyClockiDiv";
+	newDivKeyClocki.innerHTML = keyNames[playerConfigList[index].keyClocki];
 
 	newDiv.appendChild(newDivName);
+	newDiv.appendChild(newDivColor);
 	newDiv.appendChild(newDivKeyAnti);
 	newDiv.appendChild(newDivKeyClocki);
 

@@ -1,3 +1,5 @@
+playerScoreDivIdPrefix = "playerScoreDiv";
+
 function getConfigFromUrl(){
 	var querySring = location.search;
 	var index1 = querySring.indexOf('config=');
@@ -63,7 +65,6 @@ var resetCanvas =  function(){
 	}
 	timeElapsed=0;
 	noOfAlivePlayers = noOfPlayers;
-
 }
 
 
@@ -82,13 +83,36 @@ addEventListener("keyup", function (e)
 {	delete pressedKeys[e.keyCode];
 }, false);
 
+var appendScoreDivs = function(){
+	for(var i = 0; i < noOfPlayers; i++){
+		newDiv = document.createElement("div");
+		newDiv.className = "playerStatusDiv";
+		
+		newDivName = document.createElement("div");
+		newDivName.className = "playerNameStatusDiv"
+		newDivName.innerHTML = playerNames[config[i].colorIndex];
+
+		newDivColor = document.createElement("div");
+		newDivColor.className = "playerColorStatusDiv";
+		newDivColor.style.backgroundColor = playerColors[config[i].colorIndex];
+
+		newDivScore = document.createElement("div");
+		newDivScore.className = "playerScoreStatusDiv";
+		newDivScore.id = playerScoreDivIdPrefix + i;
+		newDivScore.innerHTML = "0";
+
+		newDiv.appendChild(newDivName);
+		newDiv.appendChild(newDivColor);
+		newDiv.appendChild(newDivScore);
+
+		document.getElementById("scores").appendChild(newDiv);
+	}
+}
 
 var showScores = function(){
-	var scoreText = "Scores:</br>";
 	for(var ioi = 0; ioi < noOfPlayers; ioi++){
-		scoreText += playerNames[ioi] + ": " + playerList[ioi].score + "</br>";
+		document.getElementById(playerScoreDivIdPrefix + ioi).innerHTML = playerList[ioi].score;
 	} 
-	document.getElementById("scores").innerHTML = scoreText;
 }
 
 //render function
@@ -148,7 +172,7 @@ var render = function(millisecs){
 		}
 
 
-//Algo for colision detection. So ugly.
+		//Algo for colision detection. So ugly.
 		if(playerList[i].alive){
 			for(var ii = 1; ii<=1.2; ii+= 0.1){
 				testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
@@ -190,9 +214,6 @@ var render = function(millisecs){
 	}
 };
 
-
-
-
 var main = function () {
 	var now = Date.now();
 	var delta = now - then;
@@ -208,6 +229,7 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 
 var then = Date.now();
 
+appendScoreDivs();
 resetCanvas();
 
 render(0.001);
