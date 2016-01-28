@@ -53,7 +53,6 @@ body{
 	height: 60px;
 	text-align: center;
 	font-size: 40px;
-
 }
 
 .plainLink{
@@ -63,6 +62,19 @@ body{
 
 .centerDiv{
 	display: inline-block;
+}
+
+.middleDiv{
+	display: inline-block;
+	margin-top: 20px;
+	width: 75%;
+	height: 100%;
+}
+
+#gamediv{
+	text-align: center;
+	left: 250px;
+	top: 100px;
 }
 
 .playerCanvas{
@@ -137,7 +149,6 @@ div.playerColorDiv{
 	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
 	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
 	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.75);
-
 }
 
 .playerScoreStatusDiv{
