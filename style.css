@@ -48,11 +48,6 @@ body{
 	text-align: left;
 }
 
-.rightDiv{
-
-	float: right;
-}
-
 .header{
 	font-weight: 100;
 	margin-top: 30px;
@@ -61,6 +56,11 @@ body{
 	text-align: center;
 	font-size: 40px;
 
+}
+
+.plainLink{
+	color: inherit;
+	text-decoration: inherit;
 }
 
 .centerDiv{

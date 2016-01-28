@@ -16,8 +16,8 @@ function getConfigFromUrl(){
 }
 
 function getDefaultConfig(){
-	var noOfPlayers_temp = prompt("Enter no of players (Max 4, for now) :");
-	if(!noOfPlayers_temp) noOfPlayers=1;
+	var noOfPlayers_temp = prompt("Enter no of players (" + minPlayerCount + " to " + maxPlayerCount  + "):");
+	if(!(noOfPlayers_temp >= minPlayerCount && noOfPlayers_temp <= maxPlayerCount)) noOfPlayers_temp = 2;
 	return(getDefaultPlayerConfigList(noOfPlayers_temp));
 }
 
@@ -28,9 +28,9 @@ var noOfPlayers = config.length;
 var canvasWidth=600, canvasHeight = 600;
 
 var player = function(direc , xx, yy , col, keyAnti, keyClocki, prevScore) {
-	this.direction = Math.floor((Math.random() * 2 * Math.PI));
-	this.x = Math.floor((Math.random() * canvasWidth * (0.6)) + canvasWidth * (0.2));
-	this.y = Math.floor((Math.random() * canvasHeight * (0.6)) + canvasHeight * (0.2));
+	this.direction = direc;
+	this.x = xx;
+	this.y = yy;
 	this.color = col;
 	this.keyAnti =  keyAnti;
 	this.keyClocki = keyClocki;
@@ -43,10 +43,6 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
-//console.log(canvas.style);
-//document.getElementById("gamediv").appendChild(canvas);
-//document.body.style.backgroundColor = "black";
-
 
 var playerList = [];
 var timeElapsed=0;
@@ -61,7 +57,15 @@ var resetCanvas =  function(){
 		console.log(playerList[iitu]);
 		console.log("playerList[iitu].score");
 		console.log(playerList[iitu]?playerList[iitu].score:0);
-		playerList[iitu] =  new player(0,30,30,config[iitu].colorIndex, config[iitu].keyAnti,config[iitu].keyClocki,(playerList[iitu]?playerList[iitu].score:0));
+		playerList[iitu] =  new player(
+			Math.floor((Math.random() * 2 * Math.PI)),
+			Math.floor((Math.random() * canvasWidth * (0.6)) + canvasWidth * (0.2)),
+			Math.floor((Math.random() * canvasHeight * (0.6)) + canvasHeight * (0.2)),
+			config[iitu].colorIndex,
+			config[iitu].keyAnti,
+			config[iitu].keyClocki,
+			(playerList[iitu]?playerList[iitu].score:0)
+		);
 	}
 	timeElapsed=0;
 	noOfAlivePlayers = noOfPlayers;
