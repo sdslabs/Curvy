@@ -12,9 +12,7 @@ body{
 	padding: 0;
 	height: 100%;
 	color: #bbb;
-	/*background: radial-gradient(circle, #151515 5%, #101010 20%, #080808 30%, #050505 40%, black 100%);;*/
-	/*background: -webkit-gradient(radial, 50% 50%, 20, 50% 50%, 400, from(#292222), to(#111));*/
-	/*background: linear-gradient(#040404, #111);*/
+	overflow: hidden;
 }
 
 .squareDiv{
