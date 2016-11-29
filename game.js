@@ -197,7 +197,10 @@ var render = function(millisecs){
 			for(var ie = 0; ie < playerList.length; ie++)
 				if(playerList[ie].alive) playerList[ie].score+=1;
 			showScores();
-			if (noOfAlivePlayers==0){
+			var x=0 ;
+			if(noOfPlayers>1)
+				x=1 ;
+			if (noOfAlivePlayers==x){
 				showScores();
 				setTimeout(function(){
 					resetCanvas();
