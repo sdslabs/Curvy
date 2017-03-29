@@ -80,10 +80,10 @@ var pressedKeys = {};
 addEventListener("keydown", function (e) {
 	pressedKeys[e.keyCode] = true;
 	console.log(e.keyCode);
-}, true);		
+}, true);
 
 //remove key
-addEventListener("keyup", function (e) 
+addEventListener("keyup", function (e)
 {	delete pressedKeys[e.keyCode];
 }, true);
 
@@ -91,7 +91,7 @@ var appendScoreDivs = function(){
 	for(var i = 0; i < noOfPlayers; i++){
 		newDiv = document.createElement("div");
 		newDiv.className = "playerStatusDiv";
-		
+
 		newDivName = document.createElement("div");
 		newDivName.className = "playerNameStatusDiv"
 		newDivName.innerHTML = playerNames[config[i].colorIndex];
@@ -116,7 +116,7 @@ var appendScoreDivs = function(){
 var showScores = function(){
 	for(var ioi = 0; ioi < noOfPlayers; ioi++){
 		document.getElementById(playerScoreDivIdPrefix + ioi).innerHTML = playerList[ioi].score;
-	} 
+	}
 }
 
 //render function
@@ -163,7 +163,7 @@ var render = function(millisecs){
 			newX = oldX + dist * Math.cos(oldDirec);
 			newY = oldY - dist * Math.sin(oldDirec);
 
-			
+
 			playerList[i].x = newX;
 			playerList[i].y = newY;
 
@@ -171,7 +171,7 @@ var render = function(millisecs){
 		if(newX<0 || newX > canvasWidth || newY< 0 || newY > canvasHeight)
 		{
 			playerList[i].alive=false;
-			
+
 
 		}
 
@@ -180,14 +180,14 @@ var render = function(millisecs){
 		if(playerList[i].alive){
 			for(var ii = 1; ii<=1.2; ii+= 0.1){
 				testX = oldX + defaultLineWidth*(ii) * Math.cos(oldDirec);
-				testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);		
+				testY = oldY - defaultLineWidth*(ii) * Math.sin(oldDirec);
 				cols=ctx.getImageData(testX,testY,1,1).data;
 				//if(cols[0]!=0){console.log("col  " + cols[0]);}
 
 				if ((cols[0] >25 && cols[0] < 45) || (cols[0] >145 && cols[0] < 180) || (cols[0] >239))
 				{
 					playerList[i].alive=false;
-					
+
 				}
 			}
 		}
